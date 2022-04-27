@@ -9,7 +9,7 @@
     <p>{{ movies|length }} Titles</p>
     <ul>
     {% for movie in movies %}
-        <li>{{ movie.title }}</li>
+        <li>{{ movie.title }} - {{ movie.year }}</li>
     {% endfor %}
     </ul>
     <footer>
