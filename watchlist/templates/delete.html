@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Delete item</h3>
+<form method="post">
+    <h2>Are your sure delete 《{{ movie.title }}》 - {{ movie.year }}?</h2>
+    <input class="btn" type="submit" name="confirm" value="yes">
+    <a class="btn" href="{{ url_for('index') }}">no</a>
+</form>
+{% endblock %}

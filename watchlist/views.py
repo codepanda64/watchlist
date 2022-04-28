@@ -49,14 +49,29 @@ def edit(movie_id):
     return render_template('edit.html', movie=movie)
 
 
-@app.route('/movie/delete/<int:movie_id>', methods=['POST'])  # 限定只接受 POST 请求
+# @app.route('/movie/delete/<int:movie_id>', methods=['GET', 'POST'])  # 限定只接受 POST 请求
+# @login_required  # 登录保护
+# def delete(movie_id):
+#     movie = Movie.query.get_or_404(movie_id)
+#     if request.method == 'POST':
+#         print(request.form['confirm'])
+#         if request.form['confirm'] == 'yes':
+#             db.session.delete(movie)
+#             db.session.commit()
+#             flash('Item deleted.')
+#         return redirect(url_for('index'))
+#     return render_template('delete.html', movie=movie)
+
+@app.post('/movie/delete/<int:movie_id>')  # 限定只接受 POST 请求
 @login_required  # 登录保护
 def delete(movie_id):
-    movie = Movie.query.get_or_404(movie_id)  # 获取电影记录
-    db.session.delete(movie)  # 删除对应的记录
-    db.session.commit()  # 提交数据库会话
-    flash('Item deleted.')
-    return redirect('/')  # 重定向回主页
+    movie = Movie.query.get_or_404(movie_id)
+    form = request.form
+    if form['delete'] == 'Delete':
+        db.session.delete(movie)
+        db.session.commit()
+        flash('Item deleted.')
+        return redirect(url_for('index'))
 
 
 @app.route('/settings', methods=['GET', 'POST'])
